@@ -132,12 +132,17 @@ for s in stocklist:
             #updateProcessed(stockFile, s, stock.errorMessage)
             continue
 
-        for r in stock.reports:
+        # only do anually
+        #for r in stock.reports:
             # Manage missing data and other inconsistencies in data
-            manageBadData(stock, r)
+        manageBadData(stock, 'a')
 
             # Calculate new metrics and run stock tests
-            analyzeStock(stock, r)
+        analyzeStock(stock, 'a')
+
+            # if the stock fails less than 2 tests it is a good stock
+            #if stock.record['numfailed'] < 2:
+             #   stock.s is stock name
 
         # Save data and update files
         record = saveResults(stock, s, stockFile, record)

@@ -32,6 +32,8 @@ ignore these error messages:
 After you correct the errors be sure to change error in Processed column to
 "not processed" and rerun the script to process changes.
 """
+
+
 import pandas as pd
 import re
 import os
@@ -379,17 +381,22 @@ class Stock():
                              'netIncomePercentChange': 3,
                              'epsPercentChange': 3})
 
-    def test(self, report, r, mineps=0.2, minrev=0.2, minroe=0.17):
+    def test(self, report, r, mineps=0, minrev=0.1, minroe=0.1):
         """
         Check if stocks pass percent change tests.
 
-        1. Annual - EPS must increase by 20%
-        2. Annual - ROE must be over 17%
-        3. Quarterly - EPS must increase by 20%
-        4. Quarterly - Sales must increase by 20%
+        1. Annual - EPS must not decrease
+        2. Annual - ROE must be over 10%
+        3. Quarterly - EPS must increase by 10%
+        4. Quarterly - Sales must increase by 10%
         """
         # LOOK INTO AND ENSURE TESTS WORK CORRECTLY
-        m = 'annual' if r == 'a' else 'quarterly'
+        # USE ANNUAL ONLY
+        m = 'annual' # if r == 'a' else 'quarterly'
+        print(self.s)
+        eps = report.loc[0, 'epsPercentChange']
+        annual = report.loc[0, 'roe']
+        quaterly = report.loc[0, 'totalRevenuePercentChange']
         if report.loc[0, 'epsPercentChange'] < mineps:
             self.record[m + 'eps'] = 1
             self.record['numfailed'] += 1
