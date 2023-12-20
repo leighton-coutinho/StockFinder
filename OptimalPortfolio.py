@@ -9,15 +9,13 @@ NUM_TRADING_DAYS = 252
 # we will generate random w (different portfolios)
 NUM_PORTFOLIOS = 10000
 
-# stocks we are going to handle
-stocks = ['TSLA', 'ET', 'PCG', 'AMD']
 
 # historical data - define START and END dates
 start_date = '2016-01-01'
 end_date = '2023-12-01'
 
 
-def download_data():
+def download_data(stocks):
     # name of the stock (key) - stock values (2010-1017) as the values
     stock_data = {}
 
@@ -70,7 +68,7 @@ def show_portfolios(returns, volatilities):
     plt.show()
 
 
-def generate_portfolios(returns):
+def generate_portfolios(returns, stocks):
     portfolio_means = []
     portfolio_risks = []
     portfolio_weights = []
@@ -103,7 +101,7 @@ def min_function_sharpe(weights, returns):
 
 # what are the constraints? The sum of weights = 1 !!!
 # f(x)=0 this is the function to minimize
-def optimize_portfolio(weights, returns):
+def optimize_portfolio(weights, returns, stocks):
     # the sum of weights is 1
     constraints = ({'type': 'eq', 'fun': lambda x: np.sum(x) - 1})
     # the weights can be 1 at most: 1 when 100% of money is invested into a single stock
