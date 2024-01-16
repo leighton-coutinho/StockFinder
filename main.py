@@ -116,7 +116,7 @@ def getStocks():
     print(stocklist)
 
     # download data regarding the stocklist
-    #mydownload(stocklist, dataFolder, apikey)
+    mydownload(stocklist, dataFolder, apikey)
 
     goodStocks = []
     for s in stocklist:
